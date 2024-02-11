@@ -17,7 +17,7 @@ public class AtivacaoClienteService {
 
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
-		this.notificador.notificar(cliente, "Seu cadasdastro no sistema est� ativo!");
+		this.notificador.notificar(cliente, "Seu cadasdastro no sistema está ativo!");
 	}
 
 }
