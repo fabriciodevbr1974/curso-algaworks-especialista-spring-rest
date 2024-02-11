@@ -12,4 +12,5 @@ public class MeuPrimeiroController {
 	public String hello() {
 		return "Hello!";
 	}
+
 }
