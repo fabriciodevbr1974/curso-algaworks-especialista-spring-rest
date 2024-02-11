@@ -2,7 +2,7 @@ package com.algaworks.di;
 
 import com.algaworks.di.modelo.Cliente;
 import com.algaworks.di.notificacao.Notificador;
-import com.algaworks.di.notificacao.NotificadorEmail;
+import com.algaworks.di.notificacao.NotificadorSMS;
 import com.algaworks.di.service.AtivacaoClienteService;
 
 public class Main {
@@ -12,7 +12,7 @@ public class Main {
 		Cliente maria = new Cliente("Maria", "maria@xyz.com", "1177772222");
 		
 		
-		Notificador notificador = new NotificadorEmail();
+		Notificador notificador = new NotificadorSMS();
 		
 		AtivacaoClienteService ativacaoCliente = new AtivacaoClienteService(notificador);
 		ativacaoCliente.ativar(joao);
