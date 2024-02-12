@@ -9,26 +9,18 @@ import com.algaworks.algafood.di.notificacao.Notificador;
 @Component
 public class AtivacaoClienteService {
 
-	@Autowired //Ponto de injeção no atributo. Dificuldade na realização de teste unitários
+	@Autowired(required = false)
 	private Notificador notificador;
-
-//	@Autowired //Ponto de injeção no construtor
-//	public AtivacaoClienteService(Notificador notificador) {
-//		this.notificador = notificador;
-//	}
-
-//	public AtivacaoClienteService(String qualquer) {
-//		this.notificador = notificador;
-//	}
 
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
-		this.notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
+		
+		if(notificador != null) {
+			this.notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");	
+		} else {
+			System.out.println("Não existe notificador, mas cliente foi ativado");
+		}
+		
 	}
-
-//	@Autowired //Ponto de injeção no set
-//	public void setNotificador(Notificador notificador) {
-//		this.notificador = notificador;
-//	}
 
 }
