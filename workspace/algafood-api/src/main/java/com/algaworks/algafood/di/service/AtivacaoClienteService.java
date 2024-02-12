@@ -9,6 +9,7 @@ import com.algaworks.algafood.di.notificacao.Notificador;
 @Component
 public class AtivacaoClienteService {
 
+	@Autowired
 	private Notificador notificador;
 
 //	@Autowired //Ponto de injeção no construtor
@@ -25,9 +26,9 @@ public class AtivacaoClienteService {
 		this.notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
 	}
 
-	@Autowired //Ponto de injeção no set
-	public void setNotificador(Notificador notificador) {
-		this.notificador = notificador;
-	}
+//	@Autowired //Ponto de injeção no set
+//	public void setNotificador(Notificador notificador) {
+//		this.notificador = notificador;
+//	}
 
 }
