@@ -9,7 +9,7 @@ import com.algaworks.algafood.di.notificacao.Notificador;
 @Component
 public class AtivacaoClienteService {
 
-	@Autowired
+	@Autowired //Ponto de injeção no atributo. Dificuldade na realização de teste unitários
 	private Notificador notificador;
 
 //	@Autowired //Ponto de injeção no construtor
