@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import com.algaworks.algafood.di.modelo.Cliente;
 
 @TipoDoNotificador(NivelUrgencia.URGENTE)
-
 @Component
 public class NotificadorSMS implements Notificador {
 
