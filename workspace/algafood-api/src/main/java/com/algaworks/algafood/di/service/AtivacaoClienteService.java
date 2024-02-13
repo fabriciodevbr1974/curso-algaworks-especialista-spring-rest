@@ -16,19 +16,19 @@ import jakarta.annotation.PreDestroy;
 //ou
 @TipoDoNotificador(NivelUrgencia.URGENTE)
 
-@Component
+//@Component
 public class AtivacaoClienteService {
 
 	@TipoDoNotificador(NivelUrgencia.NORMAL)
 	@Autowired(required = false)
 	private Notificador notificador;
 	
-	@PostConstruct
+//	@PostConstruct
 	public void init() {
 		System.out.println("INIT");
 	}
 
-	@PreDestroy
+//	@PreDestroy
 	public void destroy() {
 		System.out.println("DESTROY");
 	}
