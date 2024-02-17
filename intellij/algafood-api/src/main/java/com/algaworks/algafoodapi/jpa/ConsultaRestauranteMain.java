@@ -2,6 +2,7 @@ package com.algaworks.algafoodapi.jpa;
 
 import com.algaworks.algafoodapi.AlgafoodApiApplication;
 import com.algaworks.algafoodapi.domain.model.Restaurante;
+import com.algaworks.algafoodapi.domain.model.Restaurante;
 import com.algaworks.algafoodapi.domain.repository.RestauranteRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,12 +24,9 @@ public class ConsultaRestauranteMain {
     List<Restaurante> restaurantes = restauranteRepository.listar();
 
     for (Restaurante restaurante : restaurantes) {
-      System.out.println(restaurante.getNome());
+      System.out.printf("%s - %f - %s", restaurante.getNome(), restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
     }
   }
-
-
-
 
 
 }
