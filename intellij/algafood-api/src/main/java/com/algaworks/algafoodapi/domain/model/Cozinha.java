@@ -1,7 +1,9 @@
 package com.algaworks.algafoodapi.domain.model;
 
-import jakarta.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +14,7 @@ public class Cozinha {
   private Long id;
 
   private String nome;
+
 
   public Long getId() {
     return id;
@@ -32,8 +35,9 @@ public class Cozinha {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Cozinha cozinha)) return false;
-    return id.equals(cozinha.id);
+    if (o == null || getClass() != o.getClass()) return false;
+    Cozinha cozinha = (Cozinha) o;
+    return Objects.equals(id, cozinha.id);
   }
 
   @Override
