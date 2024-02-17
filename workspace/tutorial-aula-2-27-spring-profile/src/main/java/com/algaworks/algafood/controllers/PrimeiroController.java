@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PrimeiroController {
 	
-	@Value("${notificador.email.host-servidor}")
+//	@Value("${notificador.email.host-servidor}")
 	private String hostServidor;
 	
 	@Value("${notificador.email.porta-servidor}")
