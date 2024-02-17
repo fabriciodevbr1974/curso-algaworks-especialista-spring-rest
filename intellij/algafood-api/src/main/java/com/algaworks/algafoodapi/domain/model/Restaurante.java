@@ -15,7 +15,7 @@ public class Restaurante {
 
   private String nome;
 
-  @Column(name = "taxa_frete")
+  @Column(name = "tx_frete")
   private BigDecimal taxaFrete;
 
   public Long getId() {
