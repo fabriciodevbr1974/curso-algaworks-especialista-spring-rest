@@ -1,5 +1,6 @@
 package com.algaworks.algafoodapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -12,7 +13,8 @@ public class Cozinha {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @JsonProperty("titulo")
+  @JsonIgnore
+//  @JsonProperty("titulo")
   @Column(nullable = false)
   private String nome;
 
