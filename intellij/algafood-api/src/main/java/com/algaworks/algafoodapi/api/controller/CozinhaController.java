@@ -4,8 +4,10 @@ import com.algaworks.algafoodapi.api.controller.model.Cozinha;
 import com.algaworks.algafoodapi.api.controller.model.CozinhaXmlWrapper;
 import com.algaworks.algafoodapi.domain.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +29,22 @@ public class CozinhaController {
     return new CozinhaXmlWrapper(cozinhaRepository.listar());
   }
 
-  @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Cozinha buscarJSON(@PathVariable Long id){
-    return cozinhaRepository.buscar(id);
+  public ResponseEntity<Cozinha> buscarJSON(@PathVariable Long id){
+    Cozinha cozinha = cozinhaRepository.buscar(id);
+//    return ResponseEntity.status(HttpStatus.OK).body(cozinha);
+//    return ResponseEntity.ok().build();
+//    return ResponseEntity.ok(cozinha);
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinhas");
+
+    return ResponseEntity
+            .status(HttpStatus.FOUND)
+            .headers(headers)
+            .build();
+
+
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
