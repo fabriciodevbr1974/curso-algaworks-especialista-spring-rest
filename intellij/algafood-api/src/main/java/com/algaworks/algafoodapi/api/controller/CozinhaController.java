@@ -25,11 +25,16 @@ public class CozinhaController {
   public List<Cozinha> listarXML(){
     return cozinhaRepository.listar();
   }
-  @GetMapping("/{id}")
-  public Cozinha buscar(@PathVariable Long id){
+
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Cozinha buscarJSON(@PathVariable Long id){
     return cozinhaRepository.buscar(id);
   }
 
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+  public Cozinha buscarXML(@PathVariable Long id){
+    return cozinhaRepository.buscar(id);
+  }
 
 
 }
