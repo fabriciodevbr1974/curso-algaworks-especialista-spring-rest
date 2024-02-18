@@ -1,8 +1,8 @@
 package com.algaworks.algafoodapi.jpa;
 
 import com.algaworks.algafoodapi.AlgafoodApiApplication;
-import com.algaworks.algafoodapi.domain.model.Cidade;
-import com.algaworks.algafoodapi.domain.model.Estado;
+import com.algaworks.algafoodapi.api.controller.model.Cidade;
+import com.algaworks.algafoodapi.api.controller.model.Estado;
 import com.algaworks.algafoodapi.domain.repository.CidadeRepository;
 import com.algaworks.algafoodapi.domain.repository.EstadoRepository;
 import org.springframework.boot.WebApplicationType;

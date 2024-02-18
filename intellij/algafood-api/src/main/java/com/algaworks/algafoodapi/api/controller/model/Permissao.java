@@ -1,12 +1,11 @@
-package com.algaworks.algafoodapi.domain.model;
+package com.algaworks.algafoodapi.api.controller.model;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
-public class Cidade {
-
+public class Permissao {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +13,7 @@ public class Cidade {
   @Column(nullable = false)
   private String nome;
 
-  @ManyToOne
-  @JoinColumn(name = "estado_id")
-  private Estado estado;
-
+  private String descricao;
 
   public Long getId() {
     return id;
@@ -35,21 +31,20 @@ public class Cidade {
     this.nome = nome;
   }
 
-
-  public Estado getEstado() {
-    return estado;
+  public String getDescricao() {
+    return descricao;
   }
 
-  public void setEstado(Estado estado) {
-    this.estado = estado;
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Cidade cozinha = (Cidade) o;
-    return Objects.equals(id, cozinha.id);
+    Permissao permissao = (Permissao) o;
+    return Objects.equals(id, permissao.id);
   }
 
   @Override

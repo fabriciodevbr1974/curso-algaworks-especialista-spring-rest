@@ -1,17 +1,18 @@
-package com.algaworks.algafoodapi.domain.model;
+package com.algaworks.algafoodapi.api.controller.model;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
-public class Estado {
+@Table(name = "forma_pagamento")
+public class FormaPagamento {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false)
-  private String nome;
+  private String descricao;
 
 
   public Long getId() {
@@ -22,20 +23,20 @@ public class Estado {
     this.id = id;
   }
 
-  public String getNome() {
-    return nome;
+  public String getDescricao() {
+    return descricao;
   }
 
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Estado cozinha = (Estado) o;
-    return Objects.equals(id, cozinha.id);
+    FormaPagamento that = (FormaPagamento) o;
+    return Objects.equals(id, that.id);
   }
 
   @Override

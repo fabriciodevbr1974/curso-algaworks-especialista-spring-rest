@@ -1,4 +1,4 @@
-package com.algaworks.algafoodapi.domain.model;
+package com.algaworks.algafoodapi.api.controller.model;
 
 
 import javax.persistence.*;

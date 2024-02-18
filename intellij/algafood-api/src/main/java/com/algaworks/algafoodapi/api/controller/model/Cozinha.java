@@ -1,21 +1,17 @@
-package com.algaworks.algafoodapi.domain.model;
+package com.algaworks.algafoodapi.api.controller.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@JsonRootName("gastronomia")
+@JsonRootName( "cozinha")
 @Entity
 public class Cozinha {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-//  @JsonIgnore
-//  @JsonProperty("titulo")
   @Column(nullable = false)
   private String nome;
 
