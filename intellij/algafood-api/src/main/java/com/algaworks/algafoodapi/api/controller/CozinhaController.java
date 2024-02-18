@@ -2,6 +2,8 @@ package com.algaworks.algafoodapi.api.controller;
 
 import com.algaworks.algafoodapi.api.controller.model.Cozinha;
 import com.algaworks.algafoodapi.api.controller.model.CozinhaXmlWrapper;
+import com.algaworks.algafoodapi.domain.exception.EntidadeEmUsoException;
+import com.algaworks.algafoodapi.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafoodapi.domain.repository.CozinhaRepository;
 import com.algaworks.algafoodapi.domain.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
@@ -84,21 +86,17 @@ public class CozinhaController {
 
   }
   
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/{cozinhaId}")
 //  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public ResponseEntity<Cozinha> excluir(@PathVariable Long id){
-
-
+  public ResponseEntity<Cozinha> excluir(@PathVariable Long cozinhaId){
     try {
+      cadastroCozinhaService.excluir(cozinhaId);
+      return ResponseEntity.noContent().build();
 
-      Cozinha cozinha = cozinhaRepository.buscar(id);
-      if (cozinha != null) {
-        cozinhaRepository.remover(cozinha);
-        return ResponseEntity.noContent().build();
-      }
-      return ResponseEntity.notFound().build();
+    } catch (EntidadeNaoEncontradaException e){
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-    } catch (DataIntegrityViolationException e){
+    } catch (EntidadeEmUsoException e){
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
     }
