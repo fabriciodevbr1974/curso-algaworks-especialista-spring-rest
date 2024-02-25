@@ -1,6 +1,7 @@
 package com.algaworks.algafoodapi.infrastructure.repository;
 
 import com.algaworks.algafoodapi.api.controller.model.Estado;
+import com.algaworks.algafoodapi.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafoodapi.domain.repository.EstadoRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,11 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 
   @Transactional
   @Override
-  public void remover(Estado estado) {
-    estado = buscar(estado.getId());
+  public void remover(Long id) {
+    Estado estado = buscar(id);
+    if(estado == null){
+      throw new EntidadeNaoEncontradaException(String.format("Estado com código %d não encontrado", id));
+    }
     manager.remove(estado);
   }
 }

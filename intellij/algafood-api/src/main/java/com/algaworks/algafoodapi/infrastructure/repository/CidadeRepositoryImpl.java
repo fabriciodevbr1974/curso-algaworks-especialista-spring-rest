@@ -1,6 +1,7 @@
 package com.algaworks.algafoodapi.infrastructure.repository;
 
 import com.algaworks.algafoodapi.api.controller.model.Cidade;
+import com.algaworks.algafoodapi.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafoodapi.domain.repository.CidadeRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,13 @@ public class CidadeRepositoryImpl implements CidadeRepository {
 
   @Transactional
   @Override
-  public void remover(Cidade cidade) {
-    cidade = buscar(cidade.getId());
+  public void remover(Long id) {
+    Cidade cidade = buscar(id);
+
+    if(cidade == null){
+      throw new EntidadeNaoEncontradaException(String.format("Cidade de código %d não encontrada", id));
+    }
+
     manager.remove(cidade);
   }
 }
