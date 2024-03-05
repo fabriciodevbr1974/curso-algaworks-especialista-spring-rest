@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cidades")
@@ -25,61 +26,61 @@ public class CidadeController {
 
   @GetMapping
   public List<Cidade> listar() {
-    return cidadeRepository.listar();
+    return cidadeRepository.findAll();
   }
 
   @GetMapping("/{cidadeId}")
   public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
 
-    Cidade cidade = cidadeRepository.buscar(cidadeId);
-    if (cidade == null) {
+    Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
+    if (cidade.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 
-    return ResponseEntity.ok(cidade);
+    return ResponseEntity.ok(cidade.get());
   }
 
   @PostMapping
   public ResponseEntity<?> adicionar(@RequestBody Cidade cidade) {
 
     Long estadoId = cidade.getEstado().getId();
-    Estado estado = estadoRepository.buscar(estadoId);
-    if(estado == null){
+    Optional<Estado> estado = estadoRepository.findById(estadoId);
+    if (estado.isEmpty()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Estado de código %d não encontrado", estadoId));
     }
 
 
-    cidade = cidadeRepository.salvar(cidade);
+    cidade = cidadeRepository.save(cidade);
     return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
   }
 
   @PutMapping("/{cidadeId}")
   public ResponseEntity<?> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
 
-    Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
-    if (cidadeAtual == null) {
+    Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
+    if (cidadeAtual.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Cidade com código %d não encontrado", cidadeId));
     }
 
     Long estadoId = cidade.getEstado().getId();
-    Estado estado = estadoRepository.buscar(estadoId);
-    if(estado == null){
+    Optional<Estado> estado = estadoRepository.findById(estadoId);
+    if (estado.isEmpty()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Estado de código %d não encontrado", estadoId));
     }
-
-    BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-    cidadeAtual.setEstado(estado);
-    cidadeAtual = cidadeRepository.salvar(cidadeAtual);
-    return ResponseEntity.ok(cidadeAtual);
+    Cidade cidadeAlterada = cidadeAtual.get();
+    BeanUtils.copyProperties(cidade, cidadeAlterada, "id");
+    cidadeAlterada.setEstado(estado.get());
+    cidadeAlterada = cidadeRepository.save(cidadeAlterada);
+    return ResponseEntity.ok(cidadeAlterada);
 
   }
 
   @DeleteMapping("/{cidadeId}")
   public ResponseEntity excluir(@PathVariable Long cidadeId) {
     try {
-      cidadeRepository.remover(cidadeId);
+      cidadeRepository.deleteById(cidadeId);
       return ResponseEntity.noContent().build();
-    } catch (EntidadeNaoEncontradaException e){
+    } catch (EntidadeNaoEncontradaException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
   }

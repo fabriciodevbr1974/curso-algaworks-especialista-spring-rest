@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -29,14 +30,14 @@ public class RestauranteController {
 
   @GetMapping
   public ResponseEntity<List<Restaurante>> listar() {
-    return ResponseEntity.ok(restauranteRepository.listar());
+    return ResponseEntity.ok(restauranteRepository.findAll());
   }
 
   @GetMapping("/{restauranteId}")
   public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId) {
-    Restaurante restaurante = restauranteRepository.buscar(restauranteId);
-    if (restaurante != null) {
-      return ResponseEntity.ok(restaurante);
+    Optional<Restaurante> restaurante = restauranteRepository.findById(restauranteId);
+    if (restaurante.isPresent()) {
+      return ResponseEntity.ok(restaurante.get());
     }
     return ResponseEntity.notFound().build();
   }
@@ -56,12 +57,13 @@ public class RestauranteController {
   public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
                                      @RequestBody Restaurante restaurante) {
     try {
-      Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
+      Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 
-      if (restauranteAtual != null) {
-        BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+      if (restauranteAtual.isPresent()) {
+        Restaurante restauranteAlterado = restauranteAtual.get();
+        BeanUtils.copyProperties(restaurante, restauranteAlterado, "id");
 
-        restauranteAtual = cadastroRestauranteService.salvar(restauranteAtual);
+        restauranteAlterado = cadastroRestauranteService.salvar(restauranteAlterado);
         return ResponseEntity.ok(restauranteAtual);
       }
 
@@ -76,15 +78,17 @@ public class RestauranteController {
   @PatchMapping("/{restauranteId}")
   public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId,
                                             @RequestBody Map<String, Object> campos) {
-    Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
+    Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 
-    if (restauranteAtual == null) {
+    if (restauranteAtual.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 
-    merge(campos, restauranteAtual);
+    Restaurante restauranteAlterado = restauranteAtual.get();
 
-    return atualizar(restauranteId, restauranteAtual);
+    merge(campos, restauranteAlterado);
+
+    return atualizar(restauranteId, restauranteAlterado);
   }
 
   private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
