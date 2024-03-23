@@ -4,6 +4,8 @@ import com.algaworks.algafoodapi.api.controller.model.Cozinha;
 import com.algaworks.algafoodapi.api.controller.model.Restaurante;
 import com.algaworks.algafoodapi.domain.repository.CozinhaRepository;
 import com.algaworks.algafoodapi.domain.repository.RestauranteRepository;
+import com.algaworks.algafoodapi.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import com.algaworks.algafoodapi.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/teste")
@@ -24,11 +25,10 @@ public class TesteController {
   private RestauranteRepository restauranteRepository;
 
 
-    @GetMapping("/cozinha/por-nome")
+  @GetMapping("/cozinha/por-nome")
   public List<Cozinha> cozinhaPorNome(String nome) {
     return cozinhaRepository.findTodosByNomeContaining(nome);
   }
-
 
 
   @GetMapping("/restaurantes/por-taxa-frete")
@@ -38,10 +38,8 @@ public class TesteController {
 
   @GetMapping("/restaurantes/por-nome-e-cozinha-id")
   public List<Restaurante> restaurantesPorNomeECozinha(String nome, Long cozinhaId) {
-    return restauranteRepository.findByNomeContainingAndCozinhaId(nome,cozinhaId);
+    return restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinhaId);
   }
-
-
 
 
   //  @GetMapping("/cozinha/por-nome")
@@ -49,8 +47,15 @@ public class TesteController {
 //    return cozinhaRepository.findByNome(nome);
 //  }
 
+  @GetMapping("/restaurantes/com-frete-gratis")
+  public List<Restaurante> restaurantesComFreteGratis(String nome){
 
+    var comFreteGratis = new RestauranteComFreteGratisSpec();
+    var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
 
+    return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
+
+  }
 
 
 }
