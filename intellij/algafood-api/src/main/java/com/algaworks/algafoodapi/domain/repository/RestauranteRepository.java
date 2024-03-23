@@ -1,7 +1,6 @@
 package com.algaworks.algafoodapi.domain.repository;
 
 import com.algaworks.algafoodapi.api.controller.model.Restaurante;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries,
+public interface RestauranteRepository
+        extends CustomJpaRepository<Restaurante, Long>,
+        RestauranteRepositoryQueries,
         JpaSpecificationExecutor<Restaurante> {
 
   List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
@@ -26,8 +27,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>,
   List<Restaurante> findTop2ByNomeContaining(String nome);//Retoran os dois primeiros registros da lista (findTop2).
 
   int countByCozinhaId(Long cozinha);
-
-
 
 
 }
