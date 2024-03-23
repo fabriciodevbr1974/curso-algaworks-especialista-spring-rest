@@ -29,10 +29,7 @@ public class TesteController {
     return cozinhaRepository.findTodosByNomeContaining(nome);
   }
 
-//  @GetMapping("/cozinha/por-nome")
-//  public Optional<Cozinha> cozinhaPorNome(String nome) {
-//    return cozinhaRepository.findByNome(nome);
-//  }
+
 
   @GetMapping("/restaurantes/por-taxa-frete")
   public List<Restaurante> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
@@ -43,6 +40,17 @@ public class TesteController {
   public List<Restaurante> restaurantesPorNomeECozinha(String nome, Long cozinhaId) {
     return restauranteRepository.findByNomeContainingAndCozinhaId(nome,cozinhaId);
   }
+
+
+
+
+  //  @GetMapping("/cozinha/por-nome")
+//  public Optional<Cozinha> cozinhaPorNome(String nome) {
+//    return cozinhaRepository.findByNome(nome);
+//  }
+
+
+
 
 
 }
