@@ -1,6 +1,8 @@
 package com.algaworks.algafoodapi.api.controller.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -18,6 +20,7 @@ public class Restaurante {
   @Column(name = "taxa_frete", nullable = false)
   private BigDecimal taxaFrete;
 
+//  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "cozinha_id", nullable = false)
   private Cozinha cozinha;

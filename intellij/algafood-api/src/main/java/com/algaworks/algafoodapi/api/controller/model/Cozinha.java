@@ -1,11 +1,14 @@
 package com.algaworks.algafoodapi.api.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@JsonRootName( "cozinha")
+@JsonRootName("cozinha")
 @Entity
 public class Cozinha {
 
@@ -14,6 +17,11 @@ public class Cozinha {
   private Long id;
   @Column(nullable = false)
   private String nome;
+
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "cozinha")
+  private List<Restaurante> restaurantes = new ArrayList<>();
 
 
   public Long getId() {
