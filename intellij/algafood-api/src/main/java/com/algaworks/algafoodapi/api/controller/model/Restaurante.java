@@ -2,6 +2,7 @@ package com.algaworks.algafoodapi.api.controller.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,7 +27,8 @@ public class Restaurante {
   private BigDecimal taxaFrete;
 
 //  @JsonIgnore
-  @ManyToOne
+  @JsonIgnoreProperties("hibernateLazyInitializser")
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "cozinha_id", nullable = false)
   private Cozinha cozinha;
 
