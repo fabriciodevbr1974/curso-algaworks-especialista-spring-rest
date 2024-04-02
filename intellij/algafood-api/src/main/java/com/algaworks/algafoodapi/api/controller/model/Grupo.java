@@ -1,19 +1,26 @@
 package com.algaworks.algafoodapi.api.controller.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-public class Permissao {
+public class Grupo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false)
   private String nome;
-  @Column(nullable = false)
-  private String descricao;
+
+  @ManyToMany
+  @JoinTable(name = "grupo_permissao",
+             joinColumns = @JoinColumn(name = "grupo_id"),
+             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+  private List<Permissao> permissoes = new ArrayList<>();
+
 
   public Long getId() {
     return id;
@@ -31,20 +38,12 @@ public class Permissao {
     this.nome = nome;
   }
 
-  public String getDescricao() {
-    return descricao;
-  }
-
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Permissao permissao = (Permissao) o;
-    return Objects.equals(id, permissao.id);
+    Grupo cozinha = (Grupo) o;
+    return Objects.equals(id, cozinha.id);
   }
 
   @Override
